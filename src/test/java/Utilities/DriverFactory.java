@@ -12,6 +12,24 @@ public class DriverFactory {
 
     static AppiumDriver driver;
 
+    public static void initDriver(Properties config) throws MalformedURLException {
+
+        if (driver !=null) return;
+
+        String platformName = config.getProperty("platformName").trim();
+        String executionType = config.getProperty("executionType").trim();
+        String appiumUrl = config.getProperty("appiumServer").trim();
+
+        if (platformName.equalsIgnoreCase("Android")) {
+            initAndroidDriver(config, executionType, appiumUrl);
+        } else if (platformName.equalsIgnoreCase("iOS")) {
+            initIOSDriver(config, executionType, appiumUrl);
+        } else {
+            throw new RuntimeException("Unsupported platformName: " + platformName);
+        }
+
+    }
+
     private static void initAndroidDriver(Properties config, String executionType, String appiumUrl)
             throws MalformedURLException {
 
@@ -59,6 +77,20 @@ public class DriverFactory {
         if (executionType.equalsIgnoreCase("mobileWeb")) {
             String webUrl = config.getProperty("webUrl");
             driver.get(webUrl);
+        }
+    }
+
+    public static AppiumDriver getDriver() {
+        if (driver == null) {
+            throw new RuntimeException("Driver is not initialized. Call initDriver() first.");
+        }
+        return driver;
+    }
+
+    public static void quitDriver() {
+        if (driver != null) {
+            driver.quit();
+            driver = null;
         }
     }
 }
