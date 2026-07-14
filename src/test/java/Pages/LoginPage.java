@@ -24,5 +24,5 @@ public class LoginPage {
     }
 
     private By burgerMenuButtonNative = By.xpath("//android.widget.Button");
-    private By burgerMenuButtonWeb = By.xpath()
+    private By burgerMenuButtonWeb = By.xpath("//button[@class='nav-burger']");
 }
