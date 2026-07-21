@@ -1,5 +1,6 @@
 package Base;
 
+import Pages.DashboardPage;
 import Pages.LoginPage;
 import Utilities.DriverFactory;
 import io.appium.java_client.AppiumDriver;
@@ -14,6 +15,7 @@ public class BaseTest {
     protected AppiumDriver driver;
     protected Properties config;
     protected LoginPage loginPage;
+    protected DashboardPage dashboardPage;
 
     public void setUpAndLogin() throws IOException {
     config = new Properties();
@@ -26,6 +28,8 @@ public class BaseTest {
 
         loginPage = new LoginPage(driver, config);
         loginToNdosiAutomation();
+
+        dashboardPage = new DashboardPage(driver, config);
     }
 
     public void loginToNdosiAutomation() {
