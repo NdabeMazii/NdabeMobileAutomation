@@ -1,5 +1,6 @@
 package Base;
 
+import Pages.LoginPage;
 import Utilities.DriverFactory;
 import io.appium.java_client.AppiumDriver;
 
@@ -12,6 +13,7 @@ public class BaseTest {
 
     protected AppiumDriver driver;
     protected Properties config;
+    protected LoginPage loginPage;
 
     public void setUpAndLogin() throws IOException {
     config = new Properties();
@@ -21,5 +23,16 @@ public class BaseTest {
 
         DriverFactory.initDriver(config);
         driver = DriverFactory.getDriver();
+
+        loginPage = new LoginPage(driver, config);
+        loginToNdosiAutomation();
+    }
+
+    public void loginToNdosiAutomation() {
+        loginPage.clickBurgerMenuButton();
+        loginPage.clickSignInButton();
+        loginPage.enterEmail(config.getProperty("email"));
+        loginPage.enterPassword(config.getProperty("password"));
+        loginPage.clickLoginButton();
     }
 }
